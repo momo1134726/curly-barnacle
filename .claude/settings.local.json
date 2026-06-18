@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__visualize__read_me",
+      "Bash(npm -v)",
+      "PowerShell(node -v)",
+      "PowerShell(npm -v)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); node -v; npm -v)",
+      "mcp__Claude_Preview__preview_start",
+      "PowerShell(\\(Get-Command npm\\).Source)"
+    ]
+  }
+}
