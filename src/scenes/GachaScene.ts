@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { COLORS, SceneKey } from '../constants';
 import { drawGacha } from '../systems/GachaSystem';
+import { addOjisan } from '../systems/SaveSystem';
 import type { OjisanBase, Rarity } from '../types/ojisan';
 
 const RARITY_COLOR: Record<Rarity, string> = {
@@ -30,6 +31,7 @@ export class GachaScene extends Phaser.Scene {
 
   private _doDraw(count: 1 | 10) {
     const results = drawGacha(count);
+    results.forEach((ojisan) => addOjisan(ojisan.id));
     this._showResults(results);
   }
 
