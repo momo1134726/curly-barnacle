@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, SceneKey } from '../constants';
+import { COLORS, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
 import { getMissionStatuses, claimMissionReward } from '../systems/MissionSystem';
 import { getTickets } from '../systems/SaveSystem';
 
@@ -14,11 +14,21 @@ export class MissionScene extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
     this.add.rectangle(width / 2, height / 2, width, height, COLORS.BG);
-    this.add.text(width / 2, height * 0.07, 'ミッション', { fontSize: '28px', color: '#e94560', fontStyle: 'bold' }).setOrigin(0.5);
+    this.add.text(width / 2, height * 0.065, 'ミッション', {
+      fontFamily: FONT_HEADING,
+      fontSize: '28px',
+      color: '#e94560',
+      padding: { top: 8, bottom: 4 },
+      resolution: TEXT_RESOLUTION,
+    }).setOrigin(0.5);
 
-    this.ticketText = this.add.text(width / 2, height * 0.115, '', {
-      fontSize: '14px',
+    this.ticketText = this.add.text(width / 2, height * 0.11, '', {
+      fontFamily: FONT_BODY,
+      fontStyle: '700',
+      fontSize: '16px',
       color: '#ffd700',
+      padding: { top: 4, bottom: 4 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
 
     this.listContainer = this.add.container(0, 0);
@@ -45,29 +55,42 @@ export class MissionScene extends Phaser.Scene {
       );
 
       const title = this.add.text(width / 2 - cardW / 2 + 16, y - 18, status.def.title, {
-        fontSize: '14px',
+        fontFamily: FONT_BODY,
+        fontStyle: '700',
+        fontSize: '15px',
         color: '#ffffff',
+        padding: { top: 3, bottom: 3 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0, 0.5);
 
-      const progress = this.add.text(width / 2 - cardW / 2 + 16, y + 8, `${status.progress} / ${status.def.target}　報酬: 🎫×${status.def.reward}`, {
-        fontSize: '12px',
+      const progress = this.add.text(width / 2 - cardW / 2 + 16, y + 10, `${status.progress} / ${status.def.target}　報酬: 🎫×${status.def.reward}`, {
+        fontFamily: FONT_BODY,
+        fontSize: '13px',
         color: '#888888',
+        padding: { top: 2, bottom: 2 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0, 0.5);
 
       const items: Phaser.GameObjects.GameObject[] = [card, title, progress];
 
       if (status.isClaimed) {
         const doneText = this.add.text(width / 2 + cardW / 2 - 16, y, '受取済み', {
+          fontFamily: FONT_BODY,
           fontSize: '13px',
           color: '#555555',
+          padding: { top: 2, bottom: 2 },
+      resolution: TEXT_RESOLUTION,
         }).setOrigin(1, 0.5);
         items.push(doneText);
       } else if (status.isComplete) {
         const claimBtn = this.add.text(width / 2 + cardW / 2 - 16, y, '受け取る', {
-          fontSize: '13px',
+          fontFamily: FONT_BODY,
+          fontStyle: '700',
+          fontSize: '14px',
           color: '#1a1a2e',
           backgroundColor: '#ffd700',
-          padding: { x: 12, y: 6 },
+          padding: { x: 14, y: 8 },
+      resolution: TEXT_RESOLUTION,
         }).setOrigin(1, 0.5).setInteractive({ useHandCursor: true });
         claimBtn.on('pointerdown', () => {
           claimMissionReward(status.def.id);
@@ -76,8 +99,11 @@ export class MissionScene extends Phaser.Scene {
         items.push(claimBtn);
       } else {
         const lockedText = this.add.text(width / 2 + cardW / 2 - 16, y, '未達成', {
+          fontFamily: FONT_BODY,
           fontSize: '13px',
           color: '#555555',
+          padding: { top: 2, bottom: 2 },
+      resolution: TEXT_RESOLUTION,
         }).setOrigin(1, 0.5);
         items.push(lockedText);
       }
@@ -89,7 +115,13 @@ export class MissionScene extends Phaser.Scene {
   private _backButton() {
     const { width, height } = this.scale;
     this.add.text(width / 2, height * 0.96, '← ホームへ', {
-      fontSize: '18px', color: '#ffffff', backgroundColor: '#333333', padding: { x: 20, y: 10 },
+      fontFamily: FONT_BODY,
+      fontStyle: '500',
+      fontSize: '17px',
+      color: '#ffffff',
+      backgroundColor: '#333333',
+      padding: { x: 20, y: 10 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.scene.start(SceneKey.HOME));
   }
 }

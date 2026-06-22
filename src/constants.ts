@@ -8,6 +8,16 @@ export const COLORS = {
   TEXT: 0xffffff,
 } as const;
 
+// 見出し：インパクト重視 / 本文：丸ゴシックで読みやすさ重視
+export const FONT_HEADING = 'Mochiy Pop One';
+export const FONT_BODY = 'Zen Maru Gothic';
+
+// Phaser Text の上部見切れ防止の標準パディング
+export const TEXT_PADDING = { top: 8, bottom: 4 };
+
+// テキストのぼやけ防止（CSSで拡大表示される分、内部解像度を上げてシャープにする）
+export const TEXT_RESOLUTION = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 3) * 1.5;
+
 export const SceneKey = {
   BOOT: 'BootScene',
   TITLE: 'TitleScene',

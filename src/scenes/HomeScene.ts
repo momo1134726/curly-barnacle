@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, SceneKey } from '../constants';
+import { COLORS, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
 import { checkAndApplyDailyLogin, getTickets, addTickets } from '../systems/SaveSystem';
 import { getLoginBonusReward } from '../data/loginBonus';
 
@@ -15,30 +15,39 @@ export class HomeScene extends Phaser.Scene {
 
     this.add.rectangle(width / 2, height / 2, width, height, COLORS.BG);
 
-    this.add.text(width / 2, height * 0.08, 'おじさんゲーム', {
-      fontSize: '28px',
+    this.add.text(width / 2, height * 0.09, 'おじさんゲーム', {
+      fontFamily: FONT_HEADING,
+      fontSize: '32px',
       color: '#e94560',
-      fontStyle: 'bold',
+      padding: { top: 10, bottom: 6 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
 
-    this.ticketText = this.add.text(width / 2, height * 0.13, '', {
-      fontSize: '14px',
+    this.ticketText = this.add.text(width / 2, height * 0.145, '', {
+      fontFamily: FONT_BODY,
+      fontStyle: '700',
+      fontSize: '17px',
       color: '#ffd700',
+      padding: { top: 4, bottom: 4 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
     this._refreshTicketText();
 
     const buttons = [
-      { label: 'ガチャ', scene: SceneKey.GACHA, y: 0.35 },
-      { label: 'コレクション', scene: SceneKey.COLLECTION, y: 0.5 },
-      { label: 'ミッション', scene: SceneKey.MISSION, y: 0.65 },
+      { label: 'ガチャ', scene: SceneKey.GACHA, y: 0.36 },
+      { label: 'コレクション', scene: SceneKey.COLLECTION, y: 0.51 },
+      { label: 'ミッション', scene: SceneKey.MISSION, y: 0.66 },
     ];
 
     for (const btn of buttons) {
       const b = this.add.text(width / 2, height * btn.y, btn.label, {
-        fontSize: '24px',
+        fontFamily: FONT_BODY,
+        fontStyle: '700',
+        fontSize: '26px',
         color: '#ffffff',
         backgroundColor: '#16213e',
-        padding: { x: 40, y: 16 },
+        padding: { x: 40, y: 18 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
       b.on('pointerover', () => b.setStyle({ backgroundColor: '#e94560' }));
@@ -67,29 +76,42 @@ export class HomeScene extends Phaser.Scene {
     const { width, height } = this.scale;
 
     const overlay = this.add.rectangle(width / 2, height / 2, width, height, 0x000000, 0.7).setInteractive();
-    const box = this.add.rectangle(width / 2, height / 2, width * 0.8, 220, 0x16213e).setStrokeStyle(2, 0xe94560);
+    const box = this.add.rectangle(width / 2, height / 2, width * 0.8, 230, 0x16213e).setStrokeStyle(2, 0xe94560);
 
-    const title = this.add.text(width / 2, height / 2 - 70, 'ログインボーナス！', {
-      fontSize: '20px',
+    const title = this.add.text(width / 2, height / 2 - 72, 'ログインボーナス！', {
+      fontFamily: FONT_HEADING,
+      fontSize: '22px',
       color: '#e94560',
-      fontStyle: 'bold',
+      padding: { top: 8, bottom: 4 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
 
-    const streakText = this.add.text(width / 2, height / 2 - 30, `${streak}日連続ログイン`, {
-      fontSize: '16px',
+    const streakText = this.add.text(width / 2, height / 2 - 28, `${streak}日連続ログイン`, {
+      fontFamily: FONT_BODY,
+      fontStyle: '500',
+      fontSize: '17px',
       color: '#ffffff',
+      padding: { top: 4, bottom: 4 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
 
-    const rewardText = this.add.text(width / 2, height / 2 + 10, `🎫 ガチャチケット ×${reward}`, {
-      fontSize: '18px',
+    const rewardText = this.add.text(width / 2, height / 2 + 14, `🎫 ガチャチケット ×${reward}`, {
+      fontFamily: FONT_BODY,
+      fontStyle: '700',
+      fontSize: '20px',
       color: '#ffd700',
+      padding: { top: 4, bottom: 4 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
 
-    const closeBtn = this.add.text(width / 2, height / 2 + 70, '受け取る', {
-      fontSize: '16px',
+    const closeBtn = this.add.text(width / 2, height / 2 + 74, '受け取る', {
+      fontFamily: FONT_BODY,
+      fontStyle: '700',
+      fontSize: '17px',
       color: '#ffffff',
       backgroundColor: '#e94560',
-      padding: { x: 24, y: 10 },
+      padding: { x: 26, y: 12 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
     const elements = [overlay, box, title, streakText, rewardText, closeBtn];

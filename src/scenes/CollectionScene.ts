@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, SceneKey } from '../constants';
+import { COLORS, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
 import { OJISANS } from '../data/ojisans';
 import { getAllOwnedCounts } from '../systems/SaveSystem';
 import type { Rarity } from '../types/ojisan';
@@ -18,23 +18,33 @@ export class CollectionScene extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
     this.add.rectangle(width / 2, height / 2, width, height, COLORS.BG);
-    this.add.text(width / 2, height * 0.06, 'コレクション', { fontSize: '28px', color: '#e94560', fontStyle: 'bold' }).setOrigin(0.5);
+    this.add.text(width / 2, height * 0.055, 'コレクション', {
+      fontFamily: FONT_HEADING,
+      fontSize: '28px',
+      color: '#e94560',
+      padding: { top: 8, bottom: 4 },
+      resolution: TEXT_RESOLUTION,
+    }).setOrigin(0.5);
 
     const owned = getAllOwnedCounts();
     const ownedTypeCount = OJISANS.filter((o) => (owned[o.id] ?? 0) > 0).length;
-    this.add.text(width / 2, height * 0.105, `所持種類数: ${ownedTypeCount} / ${OJISANS.length}`, {
-      fontSize: '14px',
+    this.add.text(width / 2, height * 0.1, `所持種類数: ${ownedTypeCount} / ${OJISANS.length}`, {
+      fontFamily: FONT_BODY,
+      fontStyle: '500',
+      fontSize: '15px',
       color: '#cccccc',
+      padding: { top: 3, bottom: 3 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
 
     const cols = 4;
-    const cardW = 80;
-    const cardH = 66;
-    const gapX = 8;
-    const gapY = 6;
+    const cardW = 82;
+    const cardH = 78;
+    const gapX = 6;
+    const gapY = 8;
     const totalRowWidth = cols * cardW + (cols - 1) * gapX;
     const startX = width / 2 - totalRowWidth / 2 + cardW / 2;
-    const startY = height * 0.16;
+    const startY = height * 0.155;
 
     OJISANS.forEach((ojisan, i) => {
       const col = i % cols;
@@ -51,27 +61,42 @@ export class CollectionScene extends Phaser.Scene {
 
       this.add.rectangle(x, y, cardW, cardH, fillColor).setStrokeStyle(2, strokeColor);
 
-      this.add.text(x, y - cardH / 2 + 10, '★'.repeat(ojisan.rarity), {
-        fontSize: '9px',
+      this.add.text(x, y - cardH / 2 + 13, '★'.repeat(ojisan.rarity), {
+        fontFamily: FONT_BODY,
+        fontStyle: '700',
+        fontSize: '10px',
         color: isOwned ? RARITY_COLOR[ojisan.rarity] : '#444444',
+        padding: { top: 2, bottom: 2 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0.5);
 
       this.add.text(x, y - 4, isOwned ? ojisan.name : '？？？', {
-        fontSize: '10px',
+        fontFamily: FONT_BODY,
+        fontStyle: '500',
+        fontSize: '11px',
         color: isOwned ? '#ffffff' : '#555555',
         align: 'center',
         wordWrap: { width: cardW - 8 },
+        padding: { top: 2, bottom: 2 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0.5);
 
-      this.add.text(x, y + cardH / 2 - 16, isOwned ? ojisan.type : '未所持', {
-        fontSize: '8px',
+      this.add.text(x, y + cardH / 2 - 19, isOwned ? ojisan.type : '未所持', {
+        fontFamily: FONT_BODY,
+        fontSize: '9px',
         color: isOwned ? '#888888' : '#444444',
+        padding: { top: 2, bottom: 2 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0.5);
 
       if (isOwned) {
-        this.add.text(x, y + cardH / 2 - 6, `×${count}`, {
-          fontSize: '9px',
+        this.add.text(x, y + cardH / 2 - 8, `×${count}`, {
+          fontFamily: FONT_BODY,
+          fontStyle: '700',
+          fontSize: '10px',
           color: '#ffd700',
+          padding: { top: 2, bottom: 2 },
+      resolution: TEXT_RESOLUTION,
         }).setOrigin(0.5);
       }
     });
@@ -81,8 +106,14 @@ export class CollectionScene extends Phaser.Scene {
 
   private _backButton() {
     const { width, height } = this.scale;
-    this.add.text(width / 2, height * 0.97, '← ホームへ', {
-      fontSize: '18px', color: '#ffffff', backgroundColor: '#333333', padding: { x: 20, y: 10 },
+    this.add.text(width / 2, height * 0.975, '← ホームへ', {
+      fontFamily: FONT_BODY,
+      fontStyle: '500',
+      fontSize: '17px',
+      color: '#ffffff',
+      backgroundColor: '#333333',
+      padding: { x: 20, y: 10 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.scene.start(SceneKey.HOME));
   }
 }

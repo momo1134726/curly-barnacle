@@ -247,6 +247,13 @@ scale: {
 - BGM：場面ごとに雰囲気を変える（ガチャは高揚感、育成はまったり等）
 - 効果音：ボタン・ガチャ・レベルアップなど細かく設定
 
+### フォント・テキスト表示
+
+- 見出し：`Mochiy Pop One`（インパクト重視のポップ体）／本文：`Zen Maru Gothic`（丸ゴシックで読みやすさ重視）。`constants.ts` の `FONT_HEADING` / `FONT_BODY` を参照
+- Google Fonts を `index.html` で読み込み、`main.ts` で `document.fonts.load()` の完了を待ってから `new Phaser.Game()` を起動する（先に起動するとCanvas描画がフォールバックフォントのまま固定されるため）
+- Phaser Text は日本語の濁点・半濁点・絵文字で上部が見切れやすいため、すべてのテキストスタイルに `padding: { top: ..., bottom: ... }` を付与する
+- CSSで拡大表示される分テキストがぼやけるため、すべてのテキストスタイルに `resolution: TEXT_RESOLUTION`（`constants.ts`、devicePixelRatio基準）を付与してシャープに保つ
+
 ---
 
 ## コーディング規約

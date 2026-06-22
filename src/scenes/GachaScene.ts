@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, SceneKey } from '../constants';
+import { COLORS, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
 import { drawGacha } from '../systems/GachaSystem';
 import { addOjisan, getTickets, useTicket } from '../systems/SaveSystem';
 import type { OjisanBase, Rarity } from '../types/ojisan';
@@ -21,11 +21,21 @@ export class GachaScene extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
     this.add.rectangle(width / 2, height / 2, width, height, COLORS.BG);
-    this.add.text(width / 2, height * 0.07, 'ガチャ', { fontSize: '32px', color: '#e94560', fontStyle: 'bold' }).setOrigin(0.5);
+    this.add.text(width / 2, height * 0.07, 'ガチャ', {
+      fontFamily: FONT_HEADING,
+      fontSize: '34px',
+      color: '#e94560',
+      padding: { top: 10, bottom: 6 },
+      resolution: TEXT_RESOLUTION,
+    }).setOrigin(0.5);
 
-    this.ticketText = this.add.text(width / 2, height * 0.115, '', {
-      fontSize: '14px',
+    this.ticketText = this.add.text(width / 2, height * 0.12, '', {
+      fontFamily: FONT_BODY,
+      fontStyle: '700',
+      fontSize: '16px',
       color: '#ffd700',
+      padding: { top: 4, bottom: 4 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
     this._refreshTicketText();
 
@@ -59,8 +69,8 @@ export class GachaScene extends Phaser.Scene {
 
     const cols = results.length > 1 ? 3 : 1;
     const cardW = results.length > 1 ? 100 : 200;
-    const cardH = results.length > 1 ? 70 : 120;
-    const startY = height * 0.24;
+    const cardH = results.length > 1 ? 76 : 130;
+    const startY = height * 0.25;
     const gapX = cardW + 12;
     const gapY = cardH + 12;
     const totalRowWidth = cols * gapX - 12;
@@ -73,17 +83,28 @@ export class GachaScene extends Phaser.Scene {
       const y = startY + row * gapY;
 
       const card = this.add.rectangle(x, y, cardW, cardH, 0x16213e).setStrokeStyle(2, Phaser.Display.Color.HexStringToColor(RARITY_COLOR[ojisan.rarity]).color);
-      const stars = this.add.text(x, y - cardH / 2 + 14, '★'.repeat(ojisan.rarity), {
-        fontSize: results.length > 1 ? '12px' : '16px',
+      const stars = this.add.text(x, y - cardH / 2 + 16, '★'.repeat(ojisan.rarity), {
+        fontFamily: FONT_BODY,
+        fontStyle: '700',
+        fontSize: results.length > 1 ? '13px' : '18px',
         color: RARITY_COLOR[ojisan.rarity],
+        padding: { top: 3, bottom: 3 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0.5);
-      const name = this.add.text(x, y + 8, ojisan.name, {
-        fontSize: results.length > 1 ? '12px' : '16px',
+      const name = this.add.text(x, y + 10, ojisan.name, {
+        fontFamily: FONT_BODY,
+        fontStyle: '700',
+        fontSize: results.length > 1 ? '13px' : '18px',
         color: '#ffffff',
+        padding: { top: 3, bottom: 3 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0.5);
-      const type = this.add.text(x, y + cardH / 2 - 14, ojisan.type, {
-        fontSize: '11px',
+      const type = this.add.text(x, y + cardH / 2 - 16, ojisan.type, {
+        fontFamily: FONT_BODY,
+        fontSize: '12px',
         color: '#888888',
+        padding: { top: 2, bottom: 2 },
+      resolution: TEXT_RESOLUTION,
       }).setOrigin(0.5);
 
       this.resultContainer?.add([card, stars, name, type]);
@@ -94,10 +115,13 @@ export class GachaScene extends Phaser.Scene {
     const { width } = this.scale;
     const hexColor = `#${color.toString(16).padStart(6, '0')}`;
     const btn = this.add.text(width / 2, y, label, {
-      fontSize: '18px',
+      fontFamily: FONT_BODY,
+      fontStyle: '700',
+      fontSize: '19px',
       color: '#ffffff',
       backgroundColor: hexColor,
-      padding: { x: 24, y: 10 },
+      padding: { x: 24, y: 12 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
     btn.on('pointerover', () => btn.setAlpha(0.8));
@@ -108,7 +132,13 @@ export class GachaScene extends Phaser.Scene {
   private _backButton() {
     const { width, height } = this.scale;
     this.add.text(width / 2, height * 0.93, '← ホームへ', {
-      fontSize: '18px', color: '#ffffff', backgroundColor: '#333333', padding: { x: 20, y: 10 },
+      fontFamily: FONT_BODY,
+      fontStyle: '500',
+      fontSize: '17px',
+      color: '#ffffff',
+      backgroundColor: '#333333',
+      padding: { x: 20, y: 10 },
+      resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.scene.start(SceneKey.HOME));
   }
 }
