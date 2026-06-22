@@ -50,3 +50,10 @@ export const SceneKey = {
 } as const;
 
 export type SceneKey = (typeof SceneKey)[keyof typeof SceneKey];
+
+export const AssetKey = {
+  TITLE_BG: 'title_bg',
+  TITLE_LOGO: 'title_logo',
+} as const;
+
+export type AssetKey = (typeof AssetKey)[keyof typeof AssetKey];

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SceneKey } from '../constants';
+import { SceneKey, AssetKey } from '../constants';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -7,7 +7,8 @@ export class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    // TODO: アセット読み込み
+    this.load.image(AssetKey.TITLE_BG, 'assets/images/ui/title_bg.png');
+    this.load.image(AssetKey.TITLE_LOGO, 'assets/images/ui/title_logo.png');
   }
 
   create() {

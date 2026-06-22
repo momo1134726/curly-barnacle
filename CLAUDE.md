@@ -187,14 +187,16 @@ src/
   types/
     ojisan.d.ts         # 型定義
   constants.ts          # 定数
-assets/
+public/assets/
   images/
     ojisans/            # おじさんイラスト
-    ui/                 # UIパーツ
+    ui/                 # UIパーツ（title_bg.png / title_logo.png など）
   audio/
     bgm/
     se/                 # 効果音
 ```
+
+> Vite は `public/` 配下のみ静的配信するため、ゲームアセットは `assets/` ではなく `public/assets/` に置く（`scene.load.image()` 等では `assets/...` の相対パスで参照する）。
 
 ---
 

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, HEX, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
+import { HEX, SceneKey, FONT_BODY, TEXT_RESOLUTION, AssetKey } from '../constants';
 
 export class TitleScene extends Phaser.Scene {
   constructor() {
@@ -9,25 +9,17 @@ export class TitleScene extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
 
-    this.add.rectangle(width / 2, height / 2, width, height, COLORS.BG);
+    const bg = this.add.image(width / 2, height / 2, AssetKey.TITLE_BG);
+    const bgScale = Math.max(width / bg.width, height / bg.height);
+    bg.setScale(bgScale);
 
-    this.add.text(width / 2, height * 0.35, 'おじさんゲーム', {
-      fontFamily: FONT_HEADING,
-      fontSize: '52px',
-      color: HEX.PINK,
-      padding: { top: 14, bottom: 8 },
-      resolution: TEXT_RESOLUTION,
-    }).setOrigin(0.5);
+    // 黒背景の入った画像を加算合成し、黒い部分だけ透けて見えるようにする
+    const logo = this.add.image(width / 2, height * 0.27, AssetKey.TITLE_LOGO);
+    const logoScale = (width * 0.92) / logo.width;
+    logo.setScale(logoScale);
+    logo.setBlendMode(Phaser.BlendModes.ADD);
 
-    this.add.text(width / 2, height * 0.5, '〜俺たちの戦場〜', {
-      fontFamily: FONT_BODY,
-      fontSize: '22px',
-      color: '#ffffff',
-      padding: { top: 8, bottom: 4 },
-      resolution: TEXT_RESOLUTION,
-    }).setOrigin(0.5);
-
-    const startBtn = this.add.text(width / 2, height * 0.68, 'タップしてはじめる', {
+    const startBtn = this.add.text(width / 2, height * 0.85, 'タップしてはじめる', {
       fontFamily: FONT_BODY,
       fontStyle: '700',
       fontSize: '24px',
