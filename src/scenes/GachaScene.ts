@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { COLORS, SceneKey } from '../constants';
 import { drawGacha } from '../systems/GachaSystem';
-import { addOjisan } from '../systems/SaveSystem';
+import { addOjisan, getTickets, useTicket } from '../systems/SaveSystem';
 import type { OjisanBase, Rarity } from '../types/ojisan';
 
 const RARITY_COLOR: Record<Rarity, string> = {
@@ -12,6 +12,7 @@ const RARITY_COLOR: Record<Rarity, string> = {
 
 export class GachaScene extends Phaser.Scene {
   private resultContainer?: Phaser.GameObjects.Container;
+  private ticketText?: Phaser.GameObjects.Text;
 
   constructor() {
     super(SceneKey.GACHA);
@@ -20,13 +21,30 @@ export class GachaScene extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
     this.add.rectangle(width / 2, height / 2, width, height, COLORS.BG);
-    this.add.text(width / 2, height * 0.08, 'ガチャ', { fontSize: '32px', color: '#e94560', fontStyle: 'bold' }).setOrigin(0.5);
+    this.add.text(width / 2, height * 0.07, 'ガチャ', { fontSize: '32px', color: '#e94560', fontStyle: 'bold' }).setOrigin(0.5);
+
+    this.ticketText = this.add.text(width / 2, height * 0.115, '', {
+      fontSize: '14px',
+      color: '#ffd700',
+    }).setOrigin(0.5);
+    this._refreshTicketText();
 
     this.resultContainer = this.add.container(0, 0);
 
-    this._drawButton('1回引く', height * 0.78, () => this._doDraw(1));
-    this._drawButton('10回引く', height * 0.85, () => this._doDraw(10));
+    this._drawButton('🎫 チケットで1回引く', height * 0.7, 0x1f7a4d, () => this._doTicketDraw());
+    this._drawButton('1回引く', height * 0.78, 0xe94560, () => this._doDraw(1));
+    this._drawButton('10回引く', height * 0.85, 0xe94560, () => this._doDraw(10));
     this._backButton();
+  }
+
+  private _refreshTicketText() {
+    this.ticketText?.setText(`🎫 ガチャチケット: ${getTickets()}枚`);
+  }
+
+  private _doTicketDraw() {
+    if (!useTicket()) return;
+    this._doDraw(1);
+    this._refreshTicketText();
   }
 
   private _doDraw(count: 1 | 10) {
@@ -42,7 +60,7 @@ export class GachaScene extends Phaser.Scene {
     const cols = results.length > 1 ? 3 : 1;
     const cardW = results.length > 1 ? 100 : 200;
     const cardH = results.length > 1 ? 70 : 120;
-    const startY = height * 0.22;
+    const startY = height * 0.24;
     const gapX = cardW + 12;
     const gapY = cardH + 12;
     const totalRowWidth = cols * gapX - 12;
@@ -72,17 +90,18 @@ export class GachaScene extends Phaser.Scene {
     });
   }
 
-  private _drawButton(label: string, y: number, onClick: () => void) {
+  private _drawButton(label: string, y: number, color: number, onClick: () => void) {
     const { width } = this.scale;
+    const hexColor = `#${color.toString(16).padStart(6, '0')}`;
     const btn = this.add.text(width / 2, y, label, {
-      fontSize: '20px',
+      fontSize: '18px',
       color: '#ffffff',
-      backgroundColor: '#e94560',
-      padding: { x: 30, y: 12 },
+      backgroundColor: hexColor,
+      padding: { x: 24, y: 10 },
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
-    btn.on('pointerover', () => btn.setStyle({ backgroundColor: '#c43450' }));
-    btn.on('pointerout', () => btn.setStyle({ backgroundColor: '#e94560' }));
+    btn.on('pointerover', () => btn.setAlpha(0.8));
+    btn.on('pointerout', () => btn.setAlpha(1));
     btn.on('pointerdown', onClick);
   }
 
