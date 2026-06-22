@@ -41,7 +41,7 @@ export class GachaScene extends Phaser.Scene {
 
     this.resultContainer = this.add.container(0, 0);
 
-    this._drawButton('🎫 チケットで1回引く', height * 0.7, COLORS.MINT, () => this._doTicketDraw());
+    this._drawButton('🎫 チケットで1回引く', height * 0.7, COLORS.CYAN, () => this._doTicketDraw());
     this._drawButton('1回引く', height * 0.78, COLORS.GOLD, () => this._doDraw(1));
     this._drawButton('10回引く', height * 0.85, COLORS.GOLD, () => this._doDraw(10));
     this._backButton();

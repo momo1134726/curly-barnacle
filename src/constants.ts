@@ -1,32 +1,32 @@
 export const GAME_WIDTH = 390;
 export const GAME_HEIGHT = 844;
 
-// ワインピンクベース×ゴールド×ネオンピンクの配色（カジノ／パチンコ的な目を引くトーン）
+// 鮮烈レッド×ゴールド×シアン/マゼンタの配色（パチンコ演出を参考にした目を引くトーン）
 export const COLORS = {
-  BG: 0x2a0f20,
-  BG_DARK: 0x190813,
-  PANEL: 0x3d1830,
-  PANEL_BORDER: 0x6b2f52,
+  BG: 0x4a0a14,
+  BG_DARK: 0x2e060d,
+  PANEL: 0x6b0f1f,
+  PANEL_BORDER: 0xa31530,
   GOLD: 0xffb627,
   GOLD_DARK: 0xe09a14,
-  PINK: 0xff3864,
-  MINT: 0x3ee6c4,
+  PINK: 0xff2e7a,
+  CYAN: 0x29d8ff,
   TEXT: 0xffffff,
-  TEXT_MUTED: 0xc99fb8,
+  TEXT_MUTED: 0xe0a8b3,
 } as const;
 
 // 16進カラー文字列版（Phaser Text の color/backgroundColor 用）
 export const HEX = {
-  BG: '#2a0f20',
-  BG_DARK: '#190813',
-  PANEL: '#3d1830',
-  PANEL_BORDER: '#6b2f52',
+  BG: '#4a0a14',
+  BG_DARK: '#2e060d',
+  PANEL: '#6b0f1f',
+  PANEL_BORDER: '#a31530',
   GOLD: '#ffb627',
   GOLD_DARK: '#e09a14',
-  PINK: '#ff3864',
-  MINT: '#3ee6c4',
+  PINK: '#ff2e7a',
+  CYAN: '#29d8ff',
   TEXT: '#ffffff',
-  TEXT_MUTED: '#c99fb8',
+  TEXT_MUTED: '#e0a8b3',
 } as const;
 
 // 見出し：インパクト重視 / 本文：丸ゴシックで読みやすさ重視
