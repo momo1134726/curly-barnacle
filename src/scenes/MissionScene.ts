@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
+import { COLORS, HEX, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
 import { getMissionStatuses, claimMissionReward } from '../systems/MissionSystem';
 import { getTickets } from '../systems/SaveSystem';
 
@@ -17,7 +17,7 @@ export class MissionScene extends Phaser.Scene {
     this.add.text(width / 2, height * 0.065, 'ミッション', {
       fontFamily: FONT_HEADING,
       fontSize: '28px',
-      color: '#e94560',
+      color: HEX.PINK,
       padding: { top: 8, bottom: 4 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
@@ -26,7 +26,7 @@ export class MissionScene extends Phaser.Scene {
       fontFamily: FONT_BODY,
       fontStyle: '700',
       fontSize: '16px',
-      color: '#ffd700',
+      color: HEX.GOLD,
       padding: { top: 4, bottom: 4 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
@@ -49,9 +49,9 @@ export class MissionScene extends Phaser.Scene {
       const y = startY + i * rowH;
       const cardW = width * 0.88;
 
-      const card = this.add.rectangle(width / 2, y, cardW, rowH - 10, 0x16213e).setStrokeStyle(
+      const card = this.add.rectangle(width / 2, y, cardW, rowH - 10, COLORS.PANEL).setStrokeStyle(
         2,
-        status.isClaimed ? 0x444444 : status.isComplete ? 0xffd700 : 0x333333,
+        status.isClaimed ? COLORS.PANEL_BORDER : status.isComplete ? COLORS.GOLD : COLORS.PANEL_BORDER,
       );
 
       const title = this.add.text(width / 2 - cardW / 2 + 16, y - 18, status.def.title, {
@@ -87,8 +87,8 @@ export class MissionScene extends Phaser.Scene {
           fontFamily: FONT_BODY,
           fontStyle: '700',
           fontSize: '14px',
-          color: '#1a1a2e',
-          backgroundColor: '#ffd700',
+          color: HEX.BG_DARK,
+          backgroundColor: HEX.GOLD,
           padding: { x: 14, y: 8 },
       resolution: TEXT_RESOLUTION,
         }).setOrigin(1, 0.5).setInteractive({ useHandCursor: true });
@@ -119,7 +119,7 @@ export class MissionScene extends Phaser.Scene {
       fontStyle: '500',
       fontSize: '17px',
       color: '#ffffff',
-      backgroundColor: '#333333',
+      backgroundColor: HEX.PANEL,
       padding: { x: 20, y: 10 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.scene.start(SceneKey.HOME));

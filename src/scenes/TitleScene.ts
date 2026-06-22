@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
+import { COLORS, HEX, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
 
 export class TitleScene extends Phaser.Scene {
   constructor() {
@@ -14,7 +14,7 @@ export class TitleScene extends Phaser.Scene {
     this.add.text(width / 2, height * 0.35, 'おじさんゲーム', {
       fontFamily: FONT_HEADING,
       fontSize: '52px',
-      color: '#e94560',
+      color: HEX.PINK,
       padding: { top: 14, bottom: 8 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
@@ -31,8 +31,8 @@ export class TitleScene extends Phaser.Scene {
       fontFamily: FONT_BODY,
       fontStyle: '700',
       fontSize: '24px',
-      color: '#ffffff',
-      backgroundColor: '#e94560',
+      color: HEX.BG_DARK,
+      backgroundColor: HEX.GOLD,
       padding: { x: 28, y: 16 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });

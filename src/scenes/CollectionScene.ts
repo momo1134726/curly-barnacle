@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
+import { COLORS, HEX, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
 import { OJISANS } from '../data/ojisans';
 import { getAllOwnedCounts } from '../systems/SaveSystem';
 import type { Rarity } from '../types/ojisan';
@@ -21,7 +21,7 @@ export class CollectionScene extends Phaser.Scene {
     this.add.text(width / 2, height * 0.055, 'コレクション', {
       fontFamily: FONT_HEADING,
       fontSize: '28px',
-      color: '#e94560',
+      color: HEX.PINK,
       padding: { top: 8, bottom: 4 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
@@ -54,10 +54,10 @@ export class CollectionScene extends Phaser.Scene {
       const count = owned[ojisan.id] ?? 0;
       const isOwned = count > 0;
 
-      const fillColor = isOwned ? 0x16213e : 0x111111;
+      const fillColor = isOwned ? COLORS.PANEL : COLORS.BG_DARK;
       const strokeColor = isOwned
         ? Phaser.Display.Color.HexStringToColor(RARITY_COLOR[ojisan.rarity]).color
-        : 0x333333;
+        : COLORS.PANEL_BORDER;
 
       this.add.rectangle(x, y, cardW, cardH, fillColor).setStrokeStyle(2, strokeColor);
 
@@ -94,7 +94,7 @@ export class CollectionScene extends Phaser.Scene {
           fontFamily: FONT_BODY,
           fontStyle: '700',
           fontSize: '10px',
-          color: '#ffd700',
+          color: HEX.GOLD,
           padding: { top: 2, bottom: 2 },
       resolution: TEXT_RESOLUTION,
         }).setOrigin(0.5);
@@ -111,7 +111,7 @@ export class CollectionScene extends Phaser.Scene {
       fontStyle: '500',
       fontSize: '17px',
       color: '#ffffff',
-      backgroundColor: '#333333',
+      backgroundColor: HEX.PANEL,
       padding: { x: 20, y: 10 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true }).on('pointerdown', () => this.scene.start(SceneKey.HOME));

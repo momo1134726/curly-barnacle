@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
+import { COLORS, HEX, SceneKey, FONT_HEADING, FONT_BODY, TEXT_RESOLUTION } from '../constants';
 import { checkAndApplyDailyLogin, getTickets, addTickets } from '../systems/SaveSystem';
 import { getLoginBonusReward } from '../data/loginBonus';
 
@@ -18,7 +18,7 @@ export class HomeScene extends Phaser.Scene {
     this.add.text(width / 2, height * 0.09, 'おじさんゲーム', {
       fontFamily: FONT_HEADING,
       fontSize: '32px',
-      color: '#e94560',
+      color: HEX.PINK,
       padding: { top: 10, bottom: 6 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
@@ -27,7 +27,7 @@ export class HomeScene extends Phaser.Scene {
       fontFamily: FONT_BODY,
       fontStyle: '700',
       fontSize: '17px',
-      color: '#ffd700',
+      color: HEX.GOLD,
       padding: { top: 4, bottom: 4 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
@@ -45,13 +45,13 @@ export class HomeScene extends Phaser.Scene {
         fontStyle: '700',
         fontSize: '26px',
         color: '#ffffff',
-        backgroundColor: '#16213e',
+        backgroundColor: HEX.PANEL,
         padding: { x: 40, y: 18 },
       resolution: TEXT_RESOLUTION,
       }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
-      b.on('pointerover', () => b.setStyle({ backgroundColor: '#e94560' }));
-      b.on('pointerout', () => b.setStyle({ backgroundColor: '#16213e' }));
+      b.on('pointerover', () => b.setStyle({ backgroundColor: HEX.PINK }));
+      b.on('pointerout', () => b.setStyle({ backgroundColor: HEX.PANEL }));
       b.on('pointerdown', () => this.scene.start(btn.scene));
     }
 
@@ -76,12 +76,12 @@ export class HomeScene extends Phaser.Scene {
     const { width, height } = this.scale;
 
     const overlay = this.add.rectangle(width / 2, height / 2, width, height, 0x000000, 0.7).setInteractive();
-    const box = this.add.rectangle(width / 2, height / 2, width * 0.8, 230, 0x16213e).setStrokeStyle(2, 0xe94560);
+    const box = this.add.rectangle(width / 2, height / 2, width * 0.8, 230, COLORS.PANEL).setStrokeStyle(2, COLORS.GOLD);
 
     const title = this.add.text(width / 2, height / 2 - 72, 'ログインボーナス！', {
       fontFamily: FONT_HEADING,
       fontSize: '22px',
-      color: '#e94560',
+      color: HEX.PINK,
       padding: { top: 8, bottom: 4 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
@@ -99,7 +99,7 @@ export class HomeScene extends Phaser.Scene {
       fontFamily: FONT_BODY,
       fontStyle: '700',
       fontSize: '20px',
-      color: '#ffd700',
+      color: HEX.GOLD,
       padding: { top: 4, bottom: 4 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5);
@@ -108,8 +108,8 @@ export class HomeScene extends Phaser.Scene {
       fontFamily: FONT_BODY,
       fontStyle: '700',
       fontSize: '17px',
-      color: '#ffffff',
-      backgroundColor: '#e94560',
+      color: HEX.BG_DARK,
+      backgroundColor: HEX.GOLD,
       padding: { x: 26, y: 12 },
       resolution: TEXT_RESOLUTION,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
